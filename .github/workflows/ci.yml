@@ -11,49 +11,49 @@ jobs:
         target:
           - os: linux
             cpu: amd64
-            nim_branch: devel
+            nim_version: devel
           - os: linux
             cpu: amd64
-            nim_branch: v1.2.12
+            nim_version: 1.2.12
           - os: linux
             cpu: amd64
-            nim_branch: v1.4.8
+            nim_version: 1.4.8
           - os: linux
             cpu: i386
-            nim_branch: devel
+            nim_version: devel
           - os: linux
             cpu: i386
-            nim_branch: v1.2.12
+            nim_version: 1.2.12
           - os: linux
             cpu: i386
-            nim_branch: v1.4.8
+            nim_version: 1.4.8
           - os: macos
             cpu: amd64
-            nim_branch: devel
+            nim_version: devel
           - os: macos
             cpu: amd64
-            nim_branch: v1.2.12
+            nim_version: 1.2.12
           - os: macos
             cpu: amd64
-            nim_branch: v1.4.8
+            nim_version: 1.4.8
           - os: windows
             cpu: amd64
-            nim_branch: devel
+            nim_version: devel
           - os: windows
             cpu: amd64
-            nim_branch: v1.2.12
+            nim_version: 1.2.12
           - os: windows
             cpu: amd64
-            nim_branch: v1.4.8
+            nim_version: 1.4.8
           - os: windows
             cpu: i386
-            nim_branch: devel
+            nim_version: devel
           - os: windows
             cpu: i386
-            nim_branch: v1.2.12
+            nim_version: 1.2.12
           - os: windows
             cpu: i386
-            nim_branch: v1.4.8
+            nim_version: 1.4.8
         include:
           - target:
               os: linux
@@ -65,12 +65,8 @@ jobs:
               os: windows
             builder: windows-2019
 
-    name: '${{ matrix.target.os }}-${{ matrix.target.cpu }}-nim-${{ matrix.target.nim_branch }} (${{ matrix.branch }})'
+    name: '${{ matrix.target.os }}-${{ matrix.target.cpu }}-nim-${{ matrix.target.nim_version }} (${{ matrix.branch }})'
     runs-on: ${{ matrix.builder }}
-    env:
-      NIM_DIR: nim-${{ matrix.target.nim_branch }}-${{ matrix.target.cpu }}
-      NIM_BRANCH: ${{ matrix.target.nim_branch }}
-      NIM_ARCH: ${{ matrix.target.cpu }}
 
     steps:
       - name: Checkout asynctools
@@ -82,7 +78,7 @@ jobs:
       - name: Setup Nim
         uses: iffy/install-nim@v5
         with:
-          version: ${{ matrix.nimversion }}
+          version: ${{ matrix.target.nim_version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
